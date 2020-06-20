@@ -4,3 +4,11 @@ Collections are different files on disk. Joins are slow.
 
 Replica Sets: a group of mongod processes that maintain the same data set
 
+.explain() : query plan
+
+.createIndex()
+
+Aggregation: single purpose, vs Map-Reduce, vs aggregation pipeline
+
+unwind: aggregate on embedded documents
+
