@@ -1,0 +1,19 @@
+###
+### STUDIO 3T
+###
+
+https://studio3t.com/knowledge-base/categories/mongodb-tutorials/
+
+https://studio3t.com/knowledge-base/categories/documentation/
+
+https://studio3t.com/academy/
+
+https://studio3t.com/knowledge-base/articles/hotkeys/
+
+
+
+###
+### COMPASS
+###
+
+https://docs.mongodb.com/compass/master/
