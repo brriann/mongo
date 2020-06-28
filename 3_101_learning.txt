@@ -34,6 +34,8 @@ https://docs.mongodb.com/manual/core/data-modeling-introduction/
 
 https://docs.mongodb.com/manual/core/views/
 
+https://docs.mongodb.com/manual/reference/bson-types/
+
 
 ###
 ### 101 NOTES
