@@ -10,6 +10,12 @@ db.getCollection("coll").find({q},{p}).forEach(function(doc){});
 
 https://docs.mongodb.com/manual/reference/operator/query/
 
+https://studio3t.com/knowledge-base/articles/optimize-mongodb-queries/
+
+https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/
+
+https://stackoverflow.com/questions/30391703/when-to-use-map-reduce-over-aggregation-pipeline-in-mongodb
+
 ###
 ### AGGREGATION
 ###
@@ -17,3 +23,7 @@ https://docs.mongodb.com/manual/reference/operator/query/
 https://docs.mongodb.com/manual/core/aggregation-pipeline/
 
 https://docs.mongodb.com/manual/core/map-reduce/
+
+https://studio3t.com/knowledge-base/articles/run-mongodb-map-reduce-jobs/
+
+
