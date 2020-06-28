@@ -1,3 +1,15 @@
+###
+### GETTING STARTED TUTORIALS
+###
+
+https://docs.mongodb.com/manual/tutorial/getting-started/
+
+https://studio3t.com/knowledge-base/articles/mongodb-getting-started/
+
+###
+### RANDOM NOTES
+###
+
 16MB : ideal max document size
 
 Collections are different files on disk. Joins are slow.
