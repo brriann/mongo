@@ -9,3 +9,11 @@ db.getCollection("coll").find({q},{p}).forEach(function(doc){});
 ###
 
 https://docs.mongodb.com/manual/reference/operator/query/
+
+###
+### AGGREGATION
+###
+
+https://docs.mongodb.com/manual/core/aggregation-pipeline/
+
+https://docs.mongodb.com/manual/core/map-reduce/
