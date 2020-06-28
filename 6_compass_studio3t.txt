@@ -2,13 +2,23 @@
 ### STUDIO 3T
 ###
 
+https://studio3t.com/knowledge-base/articles/mongo-shell-intellishell/
+
+https://studio3t.com/knowledge-base/articles/visual-query-builder/
+
 https://studio3t.com/knowledge-base/categories/mongodb-tutorials/
 
 https://studio3t.com/knowledge-base/categories/documentation/
 
+https://studio3t.com/knowledge-base/articles/getting-started/#build-your-query
+
+https://studio3t.com/knowledge-base/articles/query-code/
+
 https://studio3t.com/academy/
 
 https://studio3t.com/knowledge-base/articles/hotkeys/
+
+https://studio3t.com/knowledge-base/articles/aggregation-editor/
 
 
 
