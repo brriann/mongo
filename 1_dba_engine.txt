@@ -1,4 +1,8 @@
 
+###
+### DBA
+###
+
 https://docs.mongodb.com/manual/administration/
 
 https://docs.mongodb.com/database-tools/
@@ -8,3 +12,26 @@ https://docs.mongodb.com/manual/reference/command/nav-administration/
 https://docs.mongodb.com/manual/replication/
 
 https://docs.mongodb.com/manual/sharding/
+
+https://studio3t.com/knowledge-base/articles/mongodb-advantages-use-cases/
+
+https://studio3t.com/knowledge-base/articles/copy-mongodb-databases-across-connections/
+
+
+###
+### ENGINE
+###
+
+
+
+
+
+
+
+
+
+
+
+
+
+
