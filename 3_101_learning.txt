@@ -1,3 +1,40 @@
+
+###
+### GETTING STARTED TUTORIALS
+###
+
+https://docs.mongodb.com/manual/tutorial/getting-started/
+
+https://studio3t.com/knowledge-base/articles/mongodb-getting-started/
+
+https://docs.mongodb.com/manual/introduction/
+
+https://studio3t.com/knowledge-base/articles/mongodb-university-alternatives/
+
+https://studio3t.com/knowledge-base/categories/mongodb-tutorials/
+
+https://studio3t.com/knowledge-base/articles/tips-for-sql-users-new-to-mongodb/
+
+https://docs.mongodb.com/manual/reference/sql-comparison/
+
+
+###
+### CONCEPTS
+###
+
+https://docs.mongodb.com/manual/core/transactions/
+
+https://docs.mongodb.com/manual/core/crud/
+
+https://docs.mongodb.com/manual/indexes/
+
+https://docs.mongodb.com/manual/aggregation/
+
+https://docs.mongodb.com/manual/core/data-modeling-introduction/
+
+https://docs.mongodb.com/manual/core/views/
+
+
 ###
 ### 101 NOTES
 ###
@@ -12,6 +49,7 @@ MQL, mongo query language
 BSON, Binary JSON
 
 _id: ObjectId type, a Document's PRIMARY KEY
+
 
 ###
 ### 101 COMMANDS
@@ -40,6 +78,7 @@ db.collectionName.insert()
 db.colllectionName.insertMany()
 
 db.colllectionName.find()
+db.colllectionName.findAndModify()
 
 db.colllectionName.updateOne({filter}, {update}, {options})
 db.colllectionName.updateMany({filter}, {update}, {options})
@@ -48,40 +87,6 @@ db.colllectionName.deleteMany()
 db.colllectionName.remove({}) // delete all documents in a collection
 db.colllectionName.deleteMany({query})
 db.colllectionName.remove({query})
-
-
-###
-### GETTING STARTED TUTORIALS
-###
-
-https://docs.mongodb.com/manual/tutorial/getting-started/
-
-https://studio3t.com/knowledge-base/articles/mongodb-getting-started/
-
-https://docs.mongodb.com/manual/introduction/
-
-https://studio3t.com/knowledge-base/articles/mongodb-university-alternatives/
-
-https://studio3t.com/knowledge-base/categories/mongodb-tutorials/
-
-https://studio3t.com/knowledge-base/articles/tips-for-sql-users-new-to-mongodb/
-
-
-###
-### CONCEPTS
-###
-
-https://docs.mongodb.com/manual/core/transactions/
-
-https://docs.mongodb.com/manual/core/crud/
-
-https://docs.mongodb.com/manual/indexes/
-
-https://docs.mongodb.com/manual/aggregation/
-
-https://docs.mongodb.com/manual/core/data-modeling-introduction/
-
-https://docs.mongodb.com/manual/core/views/
 
 
 ###
