@@ -1,2 +1,11 @@
+###
+### TEMPLATES
+###
 
 db.getCollection("coll").find({q},{p}).forEach(function(doc){});
+
+###
+### QUERIES
+###
+
+https://docs.mongodb.com/manual/reference/operator/query/
