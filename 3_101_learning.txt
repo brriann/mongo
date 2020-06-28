@@ -1,4 +1,56 @@
 ###
+### 101 NOTES
+###
+
+Table/Row/Column
+Collection/Document/Field
+
+Sharding: horizontal scaling
+
+MQL, mongo query language
+
+BSON, Binary JSON
+
+_id: ObjectId type, a Document's PRIMARY KEY
+
+###
+### 101 COMMANDS
+###
+
+LOGIN / LOGOUT
+
+use dbName
+db.auth("userName", "password")
+db.logout()
+
+USER/ROLES
+
+use dbName
+db.createUser({user:"", pwd: "", roles: []})
+db.dropUser('userName')
+db.grantRolesToUser()
+db.revokeRolesFromUser()
+
+COLLECTION/DOCUMENT
+
+db.createCollection()
+db.collectionName.drop()
+
+db.collectionName.insert()
+db.colllectionName.insertMany()
+
+db.colllectionName.find()
+
+db.colllectionName.updateOne({filter}, {update}, {options})
+db.colllectionName.updateMany({filter}, {update}, {options})
+
+db.colllectionName.deleteMany()
+db.colllectionName.remove({}) // delete all documents in a collection
+db.colllectionName.deleteMany({query})
+db.colllectionName.remove({query})
+
+
+###
 ### GETTING STARTED TUTORIALS
 ###
 
