@@ -1,1 +1,4 @@
 
+https://hub.docker.com/_/mongo
+
+docker run --name localmongo -p 27017:27017 -d mongo
