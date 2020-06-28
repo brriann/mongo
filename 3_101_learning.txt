@@ -60,6 +60,11 @@ https://studio3t.com/knowledge-base/articles/mongodb-getting-started/
 
 https://docs.mongodb.com/manual/introduction/
 
+https://studio3t.com/knowledge-base/articles/mongodb-university-alternatives/
+
+https://studio3t.com/knowledge-base/categories/mongodb-tutorials/
+
+https://studio3t.com/knowledge-base/articles/tips-for-sql-users-new-to-mongodb/
 
 
 ###
