@@ -6,6 +6,26 @@ https://docs.mongodb.com/manual/tutorial/getting-started/
 
 https://studio3t.com/knowledge-base/articles/mongodb-getting-started/
 
+https://docs.mongodb.com/manual/introduction/
+
+
+
+###
+### CONCEPTS
+###
+
+https://docs.mongodb.com/manual/core/transactions/
+
+https://docs.mongodb.com/manual/core/crud/
+
+https://docs.mongodb.com/manual/indexes/
+
+https://docs.mongodb.com/manual/aggregation/
+
+https://docs.mongodb.com/manual/core/data-modeling-introduction/
+
+
+
 ###
 ### RANDOM NOTES
 ###
