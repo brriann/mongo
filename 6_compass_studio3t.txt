@@ -29,3 +29,7 @@ https://studio3t.com/features/#featureAggregationScreen
 ###
 
 https://docs.mongodb.com/compass/master/
+
+https://docs.mongodb.com/compass/master/schema/
+
+- Schema view: clicking (and holding) on graph representations to build query
