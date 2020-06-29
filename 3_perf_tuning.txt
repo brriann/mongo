@@ -7,3 +7,4 @@
 ### Query Execution Plan
 ###
 
+https://docs.mongodb.com/manual/reference/method/db.collection.explain/
