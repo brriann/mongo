@@ -39,6 +39,7 @@ PROJECTIONS reduce payload from a find()
 ###
 ### UPDATE
 ###
+
 https://docs.mongodb.com/manual/reference/method/db.collection.update/
 
 .updateOne({query}, {$set: {"fieldToUpdate": "newValue"}})
@@ -50,6 +51,9 @@ https://docs.mongodb.com/manual/reference/method/db.collection.update/
 
 .updateMany() // useful for data cleaning
 .updateMany({query}, {$unset: {"fieldToCleanUp": ""}})
+
+.findAndModify()
+https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/
 
 ### UPSERTS
 
