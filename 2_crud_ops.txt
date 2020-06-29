@@ -2,3 +2,64 @@
 https://docs.mongodb.com/manual/crud/
 
 https://docs.mongodb.com/manual/reference/sql-comparison/
+
+###
+### CREATE
+###
+
+insert()
+insertOne()
+insertMany()
+
+###
+### READ
+###
+
+find()
+"doc.obj.child.prop"
+
+find({arrayDoc: ["exact", "match", "ofElements"]})
+find({arrayDoc: "containsThisElt"})
+find({"arrayDoc.0": "thisEltComesFirst"})
+
+>> .find() returns a CURSOR
+https://docs.mongodb.com/manual/tutorial/iterate-a-cursor/index.html
+https://docs.mongodb.com/manual/reference/command/getMore/#dbcmd.getMore
+
+PROJECTIONS reduce payload from a find()
+.find({query}, {projection}, {options})
+.find({query}, {"name": 1, "_id": 0})
+.find({query}, {"excludeA": 0, "excludeB": 0})
+
+###
+### UPDATE
+###
+
+.updateOne({query}, {$set: {"fieldToUpdate": "newValue"}})
+.updateOne({query}, {$set: {"complexFieldToUpdate": {"childA": "valueA", "childB": "valueB"}}})
+ >> {acknowledged, matchedCount, modifiedCount}
+
+UPDATE OPERATORS:
+$set - sets value of field in document
+$unset - REMOVES specified field from document
+$min - only updates field if specified value is GREATER than the existing field value
+$max - only updates field if specified value is LESS THAN than the existing field value
+$currentDate - sets value of a field to the current date, either as Date or Timestamp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
