@@ -17,6 +17,7 @@ https://studio3t.com/knowledge-base/articles/mongodb-advantages-use-cases/
 
 https://studio3t.com/knowledge-base/articles/copy-mongodb-databases-across-connections/
 
+https://docs.mongodb.com/compass/master/schema/
 
 ###
 ### ENGINE
