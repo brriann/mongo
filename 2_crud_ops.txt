@@ -9,13 +9,18 @@ https://docs.mongodb.com/manual/reference/sql-comparison/
 
 insert()
 insertOne()
+>> {acknowledged, insertedId}
+
 insertMany()
+>> {acknowledged, [ids]}
 
 ###
 ### READ
 ###
 
-find()
+.find()
+.findOne()
+
 "doc.obj.child.prop"
 
 find({arrayDoc: ["exact", "match", "ofElements"]})
@@ -34,21 +39,80 @@ PROJECTIONS reduce payload from a find()
 ###
 ### UPDATE
 ###
+https://docs.mongodb.com/manual/reference/method/db.collection.update/
 
 .updateOne({query}, {$set: {"fieldToUpdate": "newValue"}})
 .updateOne({query}, {$set: {"complexFieldToUpdate": {"childA": "valueA", "childB": "valueB"}}})
  >> {acknowledged, matchedCount, modifiedCount}
 
-UPDATE OPERATORS:
+.updateOne({query}, {$push: {"arrayField": valueToAddToArray}})
+.updateOne({query}, {$push: {"arrayField": $each: [valueToAddToArray1, valueToAddToArray,valueToAddToArray]}})
+
+.updateMany() // useful for data cleaning
+.updateMany({query}, {$unset: {"fieldToCleanUp": ""}})
+
+### UPSERTS
+
+when an update results in creation of new documents
+
+# (forEach in an array of "newObjects")
+.updateOne({"_id": newObject._id}, {$set: newObject}, {upsert: true})
+# will overwrite if _id's match.  will insert if _id match isn't found for a newObject
+
+.replaceOne()
+https://docs.mongodb.com/manual/reference/method/db.collection.replaceOne/
+
+var doc = .find(query)
+doc.asdf1 = newValue
+doc.asdf2.push(someOtherNewValue)
+.replaceOne(query, doc)
+
+(^^ a find and update operation)
+
+### UPDATE OPERATORS:
+https://docs.mongodb.com/manual/reference/operator/update/
+
+### FIELDS
+
 $set - sets value of field in document
+$setOnInsert - sets value of field if an update results in an insert of a document
 $unset - REMOVES specified field from document
-$min - only updates field if specified value is GREATER than the existing field value
-$max - only updates field if specified value is LESS THAN than the existing field value
+$min - only updates field if specified value is LESS THAN than the existing field value
+$max - only updates field if specified value is GREATER than the existing field value
 $currentDate - sets value of a field to the current date, either as Date or Timestamp
+$inc - increments by specified
+$mul - multiplies by specified
+$rename - renames a field
 
+### ARRAY OPERATORS
 
+$
+$[]
+$[<identifier>]
+$addToSet
+$pop
+$pull
+$push
+$pullAll
 
+### ARRAY MODIFIERS
 
+$each
+$position
+$slice
+$sort
+
+### BITWISE
+
+$bit (bitwise AND/OR/XOR updates of INT values)
+
+###
+### DELETE
+###
+
+.deleteOne({query})
+.deleteMany({query})
+>> {acknowledged, deletedCount}
 
 
 
