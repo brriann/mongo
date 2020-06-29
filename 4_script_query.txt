@@ -17,6 +17,12 @@ https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/
 https://stackoverflow.com/questions/30391703/when-to-use-map-reduce-over-aggregation-pipeline-in-mongodb
 
 ###
+### CURSORS
+###
+
+https://docs.mongodb.com/manual/reference/method/js-cursor/
+
+###
 ### AGGREGATION
 ###
 
