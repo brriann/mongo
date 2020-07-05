@@ -32,8 +32,12 @@ mongod --options
 --auth
 --bind_ip
 --logpath
---fork
+--fork (run as daemon)
 --replSet
+--keyFile
+--sslMode
+--sslPEMkey
+--sslCAkey
 
 ###
 ### DBA
