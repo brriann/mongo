@@ -16,6 +16,32 @@ https://docs.mongodb.com/manual/reference/method/db.collection.findAndModify/
 
 https://stackoverflow.com/questions/30391703/when-to-use-map-reduce-over-aggregation-pipeline-in-mongodb
 
+Comparison operators
+$eq
+$ne
+$gt
+$gte
+$lt
+$lte
+$in
+$nin
+
+Element Operators
+$exists
+$type
+
+Logical Operators
+$and
+$or
+$not
+$nor
+
+Array Operators
+$all
+$size
+$elemMatch
+
+
 ###
 ### CURSORS
 ###
