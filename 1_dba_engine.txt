@@ -39,6 +39,8 @@ mongod --options
 --sslPEMkey
 --sslCAkey
 
+mongod --config /etc/mongod.conf
+
 ###
 ### DBA
 ###
