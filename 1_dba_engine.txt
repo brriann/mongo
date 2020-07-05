@@ -1,5 +1,41 @@
 
 ###
+### mongod
+###
+
+https://docs.mongodb.com/manual/reference/program/mongod/#bin.mongod
+
+ps -ef | grep mongo
+ps -ef | grep mongod
+ps -ef | grep mongos
+
+kill <pid>
+killall mongod
+
+mongod
+(1 per server in cluster)
+
+defaults
+
+port :27017
+dbpath /data/db
+bind_ip localhost
+auth disabled
+
+use admin
+db.shutdownServer()
+
+mongod --options
+--help
+--dbpath
+--port
+--auth
+--bind_ip
+--logpath
+--fork
+--replSet
+
+###
 ### DBA
 ###
 
