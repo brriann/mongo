@@ -206,6 +206,15 @@ DB Admin
 Super User
   root
 
+userAdmin - all privileges around user mgmt.  cannot do any read/write on db collections
+
+dbAdmin - DDL - collection, index, statistal data, killCursors, ....many db-specific privileges
+
+dbOwner - combines readWrite, dbAdmin, userAdmin roles.  FULL POWER!
+
+create all users on admin db.
+
+
 ###
 ### DBA
 ###
