@@ -22,6 +22,19 @@ db.coll.aggregate([{ $project: {...} }])
 db.coll.aggregate([{ $project: {_id: 0, name: 1} }]) // REMOVE or RETAIN, just like projection in a find
 db.coll.aggregate([{ $project: {_id: 0, name: 1, "field.subfieldOnly": 1} }])
 
+db.coll.aggregate([{ $project: {_id: 0, name: 1, field: "$field.subfieldOnly"} }]) // REASSIGN SUBFIELD TO FIELD NAME (field path expression)
+
+db.coll.aggregate([{ $project: {_id: 0, name: 1, newFieldName: "$field.subfieldOnly"} }]) // CREATE NEW FIELD TO HOUSE THE SUBFIELD
+
+db.coll.aggregate([{ $project: {_id: 0, name: 1, resultOfMath: { $multiply: [ {$divide: ["$field.subfieldOnly", 25]},
+                                                                             77 ]}}
+}]) // math operators on a field path expression, reassigned to new field
+
+$MAP, $MATCH AND $PROJECT WITH ARRAYS
+
+{ $match: { arrayField: { $elemMatch: { $exists: true } } } // CHECK IF FIELD IS AN ARRAY, AND IS NOT EMPTY
+
+arrayField: { $map: { input: "$arrayField", as: "arrayElt", in: { $arrayElemAt: [ { $split: ["$$arrayElt", "i"] }, 0 ] } } } // map function over each array field element ... split at the char "i" and take the 0th portion
 
 
 ###
