@@ -38,7 +38,7 @@ arrayField: { $map: { input: "$arrayField", as: "arrayElt", in: { $arrayElemAt: 
 
 
 ###
-###
+### $addFields - SIMILAR TO PROJECT ... MODIFY DOCUMENTS WITH NEW COMPUTED FIELDS, OR CHANGE EXISTING FIELDS
 ###
 
 
