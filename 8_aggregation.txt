@@ -90,8 +90,58 @@ $sort: {<fieldToSortOn>: <integer for sort direction>}
 
 
 ###
+### $group
 ###
-###
+
+{$group: {_id: <match/group criteria> } }
+{$group: {_id: $fieldNameIWantToGroupBy } }
+
+this outputs:
+
+{"_id": 2017}
+{"_id": 2018}
+{"_id": 2019}
+...
+if grouping by a year field.
+
+-grouping by just one equivalent is the same as a "distinct" command
+
+{$group: {_id: fieldNameToGroupBy,
+  fieldName: <accumulatorExpression1>,
+  fieldName: <accumulatorExpression2>,
+  ...
+} }
+
+{$group: {_id: "$year",
+  numFilmsInYear: {$sum: 1}, //each matching document sums +=1 to the numFilmsInYear aggregation field.
+  averageReview: {$avg: "$imdbRating"} // $avg average operator
+} }
+
+// grouping by a year field. getting the count of films in that year.  and sorting by the count field in another stage
+
+{$group: {_id: "$year",
+  numFilmsInYear: {$sum: 1} //each matching document sums +=1 to the numFilmsInYear aggregation field.
+} },
+{sort: { numFilmsInYear: -1 }}
+
+{ $group: _id: {numOfArrayElts: {$cond: [{$isArray: "$arrayField"}, {$size: "$arrayField"}, 0]}} } // $cond = ternary statement ... either array field size, or 0
+
+{$group: {_id: null}} // GROUP BY NULL OR '' ID GROUPS ALL DOCUMENTS. THERE IS NO MATCH/SUBSET BUCKETING
+
+// use case: get an average value for all documents meeting an intitial $match stage
+
+db.movies.aggregate([
+{$match:{rating: {$gte: 0}}},
+{$group: {_id: null, averateRaiting: { $avg: "$rating" }}}
+])
+
+Takeaways:
+_id is essentially GROUP BY ___
+$group can accept all accumulator expressions
+$group can be used multiple times within a pipeline
+
+
+
 
 
 ###
