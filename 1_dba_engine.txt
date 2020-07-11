@@ -216,6 +216,43 @@ create all users on admin db.
 
 
 ###
+### SERVER TOOLS
+###
+
+find /usr/bin/ -name "mongo*"
+ls -la /usr/bin | grep mongo
+
+mongo
+mongod
+mongodump
+mongoexport
+mongofiles
+mongoimport
+mongorestore
+mongos
+mongostat
+mongotop
+
+MONGOSTAT -quick stats on a running mongod/mongos process
+mongostat --port 27017
+
+MONGORESTORE and MONGODUMP - import/export BSON dump files from MongoDB collections
+-quick, since data is already in BSON format
+
+mongodump --port 27017 -u "root" -p "root" --authenticationDatabase "admin" --db dbToExport --collection collToExport
+>folder called "dump" created
+>dump/dbToExport/
+--BSON and JSON metadata file created
+
+mongorestore --drop --port 27017 -u "root" -p "root" --authenticationDatabase "admin" dump/
+> drop current collection and replace it with contents of dump file
+
+MONGOEXPORT and MONGOIMPORT - import/export JSON, instead of BSON
+-command line args very similar.  
+-output to standard out.  so, -o fileDestination.json will save JSON to file.
+
+
+###
 ### DBA
 ###
 
