@@ -142,12 +142,33 @@ $group can be used multiple times within a pipeline
 
 
 
-
-
 ###
-###
+### Accumulator expressions within $project
 ###
 
+$min, $max, $avg, $sum, $stdDevPop, $stdDevSam
+
+$reduce and $map -- for more complex calculations
+
+-Accumulator expressions within $project operator over an ***ARRAY FIELD*** WITHIN THE CURRENT DOCUMENT
+
+eg, {_id: 1, dataArray: [1,2,3]}
+  {_id: 2, dataArray: [4,5,6]}
+  
+db.coll.aggregate([{$project: {dataArrayAverage: {$avg: "$dataArray"}}}])
+>>
+{_id: 1, dataArrayAverage: 2}
+{_id: 2, dataArrayAverage: 5} 
+
+$reduce accumulator:
+  https://docs.mongodb.com/manual/reference/operator/aggregation/reduce/
+  $this: current elt in array
+  $$variables: for use only within scope of reduce function
+
+db.coll.aggregate([{$project: {dataArrayMax: {$max: "$dataArray"}}}])
+
+
+  
 
 ###
 ###
