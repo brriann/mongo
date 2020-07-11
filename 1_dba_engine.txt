@@ -41,6 +41,101 @@ mongod --options
 
 mongod --config /etc/mongod.conf
 
+
+###
+### File Structure on a MongoDB server
+###
+
+/data/db
+WiredTiger, WiredTiger.lock, etc (WT storage engine)
+collection___.wt : COLLECTION DATA
+index____.wt : INDEX DATA
+mongod.lock : empty if mongod not running. prevents multiple processes...
+
+/data/db/journal
+WiredTiger journal entries
+WT can look at journal/checkpoints to resume operations interrupted by a mongod process crash
+
+/tmp/mongodb-27017.sock (socket for mongod to own port 27017
+
+
+###
+### Basic Commands
+###
+
+db.__() : wrap commands that interact with DB
+rs.__() : wrap commands that control replica set deployment/management
+sh.__() : wrap commands that control sharded cluster deployment/management
+
+db.<collection>.__() : collection level operations
+
+USER MGMT
+db.createUser()
+db.dropUser()
+
+COLLECTION MGMT
+db.renameCollection()
+db.collection.createIndex()
+db.collection.drop()
+
+DB MGMT
+db.dropDatabase()
+db.createCollection()
+
+DB STATUS
+db.serverStatus()
+
+DATABASE COMMANDS VS SHELL HELPERS
+db.runCommand(db command...very verbose)
+Shell Helpers are shortcuts!
+
+db.runCommand({ <command> })
+db.commandHelp("<command>")
+
+Shell helpers are only availabe in the shell.  DB commands may be necessary from use in a Driver, eg C# driver.
+
+
+###
+### LOGGING BASICS
+###
+
+Process Log: collects activity into several components ... access, command, control, index, rollback, repl, journal, write, etc
+
+db.getLogComponents()
+verbosity: 0 = informational messages 1-5 = increase to include debug messages -1 = inherit from parent
+
+db.adminCommand({"getLog": "global"})
+db.setLogLevel(0, "index")
+
+tail -f /var/log/mongodb/mongod.log ==> LOG ENTRY SYNTAX ... timestamp, severity level, component, connection, ......
+
+Severity level of messages: F fatal E error W warning I informational D debug (1-5)
+
+
+###
+### DB PROFILING
+###
+
+System.Profile collection
+-CRUD,admin,config operations
+
+Levels: 0 off, 1 on for slow ops (>100ms, or slowms value), 2 on for all operations (2 is dangerous, for heavy profiling load.)
+
+db.getProfilingLevel()
+db.setProfilingLevel(1)
+show collections
+>> system.profile
+
+db.setProfilingLevel(1, {slowms: 0}) // everything will be profiled .. > slowms which is 0
+
+db.newcollection.insert({"a": 1})
+db.system.profile.find().pretty()
+
+db.newcollection.find({"a": 1})
+db.system.profile.find().pretty()
+
+execStats.stage:COLLSCAN ... full Collection Scan
+
 ###
 ### DBA
 ###
@@ -66,15 +161,3 @@ https://docs.mongodb.com/compass/master/schema/
 ###
 
 https://docs.mongodb.com/manual/changeStreams/
-
-
-
-
-
-
-
-
-
-
-
-
