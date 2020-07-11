@@ -168,7 +168,68 @@ $reduce accumulator:
 db.coll.aggregate([{$project: {dataArrayMax: {$max: "$dataArray"}}}])
 
 
-  
+###
+### $unwind - create a new document for every entry in an array field, an "un-reduce"
+###
+
+{id: "a", values: [1,2,3]}
+{id: "b", values: [6,7,8]}
+
+db.coll.aggregate([{$unwind: "values"}])
+
+> {id: a, values: 1}
+> {id: a, values: 2}
+> {id: a, values: 3}
+...etc
+
+use case: grouping by array individual elements
+
+$first operator in a subsequent $group 
+
+short vs long form ...
+
+$unwind: <field path>
+
+$unwind: {path: <field path>, includeArrayIndex: <string>, preserveNullAndEmptyArrays: <boolean>}
+
+-$match EARLY
+-retain only needed info with $project
+-allowDiskUse if necessary
+
+###
+### $lookup - a "left outer join" -- combine documents from 2 different collections
+###
+
+-combine ALL documents from collection on left, with MATCHING documents from collection on right
+
+$lookup: {
+  from: <collection to join>
+  localField: <field from input documents>, //single value or array
+  foreignField: <field from documents of "from" collection>, //single value or array
+  as: <output array field>
+}
+
+can use a $match stage after $lookup to filter out [] empty arrays, with no matches eg.
+
+###
+###
+###
+
+
+###
+###
+###
+
+
+###
+###
+###
+
+
+###
+###
+###
+
 
 ###
 ###
