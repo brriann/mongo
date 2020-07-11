@@ -70,6 +70,7 @@ sh.__() : wrap commands that control sharded cluster deployment/management
 db.<collection>.__() : collection level operations
 
 USER MGMT
+db.getUsers()
 db.createUser()
 db.dropUser()
 
@@ -135,6 +136,75 @@ db.newcollection.find({"a": 1})
 db.system.profile.find().pretty()
 
 execStats.stage:COLLSCAN ... full Collection Scan
+
+###
+### BASIC SECURITY 
+###
+
+Authentication (identity) - client must provide valid credentials
+Authorization (privileges of a user)
+
+Client Auth mechanisms
+  SCRAM (salted challenge response auth mech) - basic Password security
+  X.509 (auth cert)
+  LDAP (MongoDB enterprise) - lighweight directory access protocol - MS AD is built on LDAP
+  KERBEROS : MIT designed auth system
+  
+Intra-cluster Auth mechanisms (for replica sets and/or sharding?)
+
+AUTHORIZATION
+role-based access control
+
+User > Roles > Privileges (Actions, and Resources that actions apply to)
+
+localhost exception, lets you create a user with auth enabled
+
+mongo --host 127.0.0.1:27017 --username root --password root --authenticationDatabase admin
+
+
+###
+### MONGODB ROLES
+###
+
+Role => a set of privileges
+Privelege => actions that can be performed on a resource
+Resourcee => specific DB specific collection, all DB all collections, any DB specific collection, specific DB any collection, cluster resource
+
+Role can inherit from one or several roles
+
+Network restrictions can be config'd at Role level.  clientSource-serverAddress pairs
+
+BUILT-IN ROLES PER DATABASE
+
+DB User
+  read
+  readWrite
+DB Admin
+  dbAdmin
+  userAdmin
+  dbOwner
+Cluster Admin
+  clusterAdmin
+  clusterManager
+  clusterMonitor
+  hostManager
+Backup/Restore
+  backup
+  restore
+Super User
+  root
+
+BUILT IN ROLES FOR ALL DATABASES  
+ 
+ DB User
+  readAnyDatabase
+  readWriteAnyDatabase
+  
+DB Admin
+  dbAdminAnyDatabase
+  userAdminAnyDatabase
+Super User
+  root
 
 ###
 ### DBA
