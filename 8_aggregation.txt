@@ -212,8 +212,49 @@ $lookup: {
 can use a $match stage after $lookup to filter out [] empty arrays, with no matches eg.
 
 ###
+### $graphLookup
 ###
-###
+
+SQL- recurvise CTE / transitive closure
+
+$graphLookup: looking up recursively a set of documents, with a defined relationship to a starting document.
+
+$graphLookup: {
+  from: <lookup table>,
+  startWith: <expression for value to start from>,
+  connectFromField: <field name to connect from>,
+  connectToField: <field name to connect to>,
+  as: <field name FOR RESULT ARRAY>,
+  maxDepth: <# iterations to perform, optional>,
+  depthField: <field name for # iterations to reach this node IN RESULT ARRAY, optional>,
+  restrictSearchWithMatch: <match condition to apply to lookup, optional>,
+}
+
+// this $graphLookup handles documents with a reference to their BOSS
+
+{_id: 1, name: Dave, reportsTo: null} // CEO
+{_id: 2, name: Bob, reportsTo: 2} // CTO
+
+db.orgChart.aggregate([
+{$match: {name: "Boss"}},
+{$graphLookup: {
+  from: "orgChart",
+  startWith: "$_id", // from $match'd document
+  connectFromField: "_id", //field in parent document
+  connectToField: "reportsTo", //field in child document
+  as: 'reportsThatReportToBoss' // stuff resulting documents in array
+}}
+])
+
+maxDepth and depthField -- handles # iterations, etc
+
+restrictSearchWithMatch -- additional $match stage within $graphLookup
+
+GENERAL $GRAPHLOOKUP CONSIDERATIONS
+-memory allocation => allowDiskUse
+-Indexes => connectToField should be indexed for better $graphLookup performance
+-Sharding => FROM COLLECTION cannot be sharded
+-$match => $match stages are not optimized, if not related to $graphLookup... (???)
 
 
 ###
