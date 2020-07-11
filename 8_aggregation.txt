@@ -1,0 +1,59 @@
+###
+### $match - FILTERING DOCUMENTS
+###
+
+-$match should come as early as possible, and can be used multiple times in an aggregation pipeline
+-$match uses standard MongoDB query operators
+  -no $where.  $text only allowed at first stage of aggregation pipeline
+-$match in the first stage, can take advantage of INDEXES.  SO, $MATCH = FIRST STAGE!!!
+-$match does not allow projection.  
+-$match is a FILTER, not a find
+
+db.coll.aggregate([{ $match: {} }])
+
+###
+### $project - SHAPING DOCUMENTS
+###
+
+-$project is like a find projection, and much more. remove/retain fields, reassign fields, combine into new fields
+-$project is like a map function - higher order function that transforms a collection
+
+db.coll.aggregate([{ $project: {...} }])
+db.coll.aggregate([{ $project: {_id: 0, name: 1} }]) // REMOVE or RETAIN, just like projection in a find
+db.coll.aggregate([{ $project: {_id: 0, name: 1, "field.subfieldOnly": 1} }])
+
+
+
+###
+###
+###
+
+
+###
+###
+###
+
+
+###
+###
+###
+
+
+###
+###
+###
+
+
+###
+###
+###
+
+
+###
+###
+###
+
+
+###
+###
+###
