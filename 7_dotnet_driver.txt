@@ -82,16 +82,48 @@ return await collection.Find().FirstOrDefaultAsync()
 
 
 ###
-###
-###
-
-
-
-###
-###
+### BASIC READS
 ###
 
+var filter = new BsonDocument("title", "Armageddon")
+var betterFilter = Builders<Movie>.Filter.Eq(m => m.Title, "Armageddon")
 
+var movies = await _moviesCollection.Find<Movie>(betterFilter).ToListAsync()
+
+PROJECTION:
+
+var projectionFilter = Builders<Movie>.Projection
+  .Include(m => m.Title)
+  .Include(m => m.Year)
+  .Include(m => m.Cast)
+  .Exclude(m => m.Id);
+
+var movieProjected = await _moviesCollection
+  .Find<Movie>(betterFilter)
+  .Project<Movie>(projectionFilter)
+  .FirstOrDefaultAsync()
+
+
+###
+### ADVANCED READS
+###
+
+var filter = Builders<Movie>.Filter.In("cast", new string[] {"Tom Hanks"})
+
+var movieLimited = await _moviesCollection
+  .Find<Movie>(filter)
+  .Limit(2)
+  .ToListAsync()
+  
+implement paging:
+
+var movieLimited = await _moviesCollection
+.Find<Movie>(filter)
+.Sort(new BsonDocument("year", 1)) // or, Builders<Movies>.Sort.Ascending(m => m.Year)
+.Limit(moviesPerPage)
+.Skip(pageNumber * moviesPerPage)
+.ToListAsync()
+  
 
 ###
 ###
