@@ -228,15 +228,100 @@ var pipeline = PipelineDefinition<Movie, BsonDocument>.Create(filter)
 var movies = _moviesCollection.Aggregate(pipeline).ToList()
 
 
+A BETTER WAY USING THE DRIVER: .Lookup()
 
+var movies = _moviesCollection
+  .Aggregate()
+  .Match(m => (int)m.Year < 1990 && (int)m.Year >= 1980)
+  .Lookup(
+    _commentsCollection,
+    m => m.Id,
+    c => c.MovieId,
+    (Movie m) => m.Comments
+  ).ToList()
 
 
 ###
+### BASIC DELETES
 ###
+
+.DeleteOne()
+.DeleteMany()
+.FindOneAndDelete()
+
+var result = await _collection.DeleteOneAsync(filter)
+
+>>DeleteResult.DeletedCount
+
+var deletedDocument = await _collection.FindOneAndDeleteAsync(filter)
+ //perform further logic ,eg checking, on deleted doc that is now in C# memory if needed
+ 
+
+###
+### READ CONCERNS
+###
+
+different levels of "read isolation"
+
+read concern "local": may have only been written to Primary node DEFAULT READ CONCERN
+  -so data read COULD be rolled back, if 2ndary nodes haven't replicated data from Primary yet.
+
+read concern "majority": can claim that data has been replicated to majority of nodes in the replica set.
+  -so, data is very durable!
+
+CRITICAL READS  eg, account balance, should use majority read concern.
+
+
+###
+### BULK WRITES
+###
+
+series of UpdateOne()'s vs a bulkWrite() of [UpdateOne(), UpdateOne(), UpdateOne()]
+
+DB ROUND TRIPS SAVED BY BULK WRITE
+
+Bulk Write will stop in a batch after first failure.  in case writes are dependent on each other or "ordered.
+
+{ordered: false} option passed to BULK WRITE will let an unordered bulk write continue its batch writes. single failure won't prevent other writes.
+
+
+###
+### CONNECTION POOLING
+###
+
+cache of db connections maintained for future connections to DB.
+-making a new db connection for each request is expensive!  server handshake, etc.
+
+Driver will by default create a pool of 100 connections
+
+
+###
+### ROBUST CLIENT CONFIGURATION
+###
+
+-(Connection Pooling)
+-specify wtimeout for a majority write. (when write concern {w: majority} is set)
+{w: "majority", wtimeout: 5000}
+
+-always configure for & handle serverSelectionTimeout errors
+
+
+###
+### ERROR HANDLING
+###
+
+DuplicateKeyError (adding dupe values on doc's, on a field that is marked as Unique)
+
+MongoWriteException
+
+try {} catch () {}!!!
+
+TimeOutException
+
+
+###
+### PRINCIPLE OF LEAST PRIVILEGE
 ###
 
 
 
-###
-###
-###
