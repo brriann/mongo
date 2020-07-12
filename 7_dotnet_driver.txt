@@ -14,12 +14,48 @@ var collection = db.GetCollection<BsonDocument>("collection_name")
 var result = collection.Find("{id: 1234}").FirstOrDefault()
 
 
-
 ###
-###
+### USING THE DRIVER
 ###
 
+integrating MQL into a C# Find() query
+var result = collection.Find("{id: 1234}").FirstOrDefault()
+*not type safe!*
 
+using BsonDocuments
+var result = collection.Find(new BsonDocument("id", "1234").FirstOrDefault()
+
+*every {$set: {this: that}} in MQL is a nested BsonDocument!
+  var filter = new BsonDocument("Id", 1234)
+  var update = new BsonDocument("$set", new BsonDocument("price", 700))
+  var options = new UpdateOptions {IsUpsert = true};
+
+The driver's Builders class
+var builder = Builders<BsonDocument>.Filter;
+var filter = builder.Eq("id", "1234")
+
+or...
+
+var f = Builders<Guitar>.Filter.Eq(g => g.Id, 1234)
+var b = Builders<Guitar>.Update.Set(g => g.Price, 700)
+guitarsCollection.UpdateOne(f, b)
+
+The above ways (string query, nested BsonDocuments, and Builders) - don't protect against Field name correctness.
+
+***
+4th approach: LINQ, used with mapping Classes. .Find() with MongoDriver vs .Where() in LINQ
+***
+
+Mongo Driver maps _id in DB to Id in C#.  (using [BsonId])
+Also, maps field1 to Field1, fieldName2 to FieldName2, etc. (using [BsonElement("fieldName2")]
+
+var filteredCollection = db.GetCollection<Guitar>("guitars").Find(g => g.Price > 400).ToList()
+
+.Find(g => g.Price > 400)
+.InsertOne(new Guitar {Id = 6, Price = 950,...})
+.ReplaceOne(filter, replacement)
+.UpdateOne(filter, update, options)
+.DeleteOne(g => g.Id == 1234)
 
 ###
 ###
