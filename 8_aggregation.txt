@@ -258,20 +258,179 @@ GENERAL $GRAPHLOOKUP CONSIDERATIONS
 
 
 ###
+### Facets
 ###
-###
+
+- multiple filters and characterizations, along multiple dimension (facets)
+
+$sortByCount operator : groups by a field, sorts matches by count  (similar to a group by, count(*), order by clause)
+
+MANUAL BUCKETS
+-bucketing: grouping values by discrete ranges, instead of individual values
+
+{$bucket: {
+  "groupBy": "$numberOfEmployees",
+  "boundaries": [0, 20, 50, 500, 1000, Infinity],
+  "default": "Other" // OPTIONAL default bucket catches non-Int datatypes, eg String
+}}
+
+AUTO BUCKETS
+
+https://docs.mongodb.com/manual/reference/operator/aggregation/bucketAuto/
+
+{$bucketAuto: {
+  groupBy: "$aFieldName",
+  buckets: 5
+}}
+Series
+Granularity
+
+MULTIPLE FACETS
+
+{$match: {$text: {$search: "mySearchTerm"}}}
+
+$facet operator
+https://docs.mongodb.com/manual/reference/operator/aggregation/facet/
+
+-each sub-pipeline within $facet is passed the exact same input documents
+
+$sortByCount
+
+equivalent to :
+
+{$group: {_id: "fieldToGroupBy": {$sum: 1}}},
+{$sort: {"count": -1}}
 
 
 ###
+### MISC AGGREGATION
 ###
-###
+
+$redact
+https://docs.mongodb.com/manual/reference/operator/aggregation/redact/
+
+{$redact: <expression>}
+-expression must resolve to:
+
+$$DESCEND - retains current level and evaluates the next level down 
+$$PRUNE - apply to all levels below evaluated level
+$$KEEP - apply to all levels below evaluated level
+
+
+(Assume a nested sub-document hierarchy with an acl-access control list array - at each level)
+
+{$cond: [{$in: ["UserRole", "acl"] }, "$$DESCEND", "$$PRUNE"]}
+as long as UserRole was present in the acl [] array, $$DESCEND will return..once UserRole is not present, $$PRUNE is returned, and the sub-document is redacted
+
+$out
+https://docs.mongodb.com/manual/reference/operator/aggregation/out/
+
+{$out: <outputCollection>}
+$out must be the last stage in a pipeline
+
+$out will create a new collection or overwrite an existing collection
+honors indexes on existing collection
+
+
+$merge
+https://docs.mongodb.com/manual/reference/operator/aggregation/merge/
+
+$merge: a more robust version of $out.  last stage in an aggregation pipeline.
+
+{$merge: {
+  into: <target>,
+  whenNotMatched: "insert",
+  whenMatched: "merge"
+}}
+
+{$merge: {
+  into: <target>,
+  whenMatched: [{$addFields: {total: {$sum: ["$total", "$$new.total"]}}}]
+}}
+
+{$merge: {
+  into: <target>,
+  whenMatched: [{$set: {total: {$sum: ["$total", "$$new.total"]}}}]
+}}
+
+USE CASE: aggregate temp data to another collection
+
+db.temp.aggregate([
+{...} // pipeline to massage and cleanse data in temp
+{$merge: {
+  into: "dataCollection",
+  whenMatched: "fail"
+}}])
 
 
 ###
+### VIEWS IN MONGODB
 ###
+(system.view collection)
+
+https://docs.mongodb.com/manual/reference/method/db.createView/
+
+non-materialized views .. a way to use an aggregation pipeline as a "collection"
+
+Vertical slicing: through a $project stage (transform the document shape being returned. limit fields)
+
+db.customers.aggregate([{$project: {_id: 0, accountType: 1}}])
+
+Horizontal slicing: through a $match stage (limit the NUMBER OF DOCUMENTS being returned)
+
+db.customers.aggregate([{$match: {accountType: "bronze"}}, {$project: {_id: 0, accountType: 1}}])
+
+db.createView("viewName", "sourceCollection", [{aggregation}, {pipeline}])
+
+
+
 ###
+### AGGREGATION PERFORMANCE
+###
+
+"Realtime" processing vs Batch processing
+
+realtime: provide data for applications. query performance more important.
+
+Batch: provide data for analytics, performance is less important
+
+INDEXES should be used by aggregation queries.
+  -once a stage encounters documents that can't use indexes, subsequent stages cannot use indexes
+  
+{explain: true} option document... USE TO DETERMINE HOW AGG QUERIES RUN AND IF INDEXES ARE BEING USED
+
+$match and $sort, which can use indexes, SHOULD BE AT THE FRONT OF AGGREGATION PIPELINES
+
+transformations in an agg pipeline can hamper ability to use indexes
+
+$limit and $sort should be near each other, and close to front.
+  -server can do a "top-k sorting algorithm"
+  
+QUERY OPTIMIZER RUNS IN BACKGROUND
 
 
 ###
+### MEMORY CONSTRAINTS
 ###
+
+16mb document size limit
+transforms can violate this, but whatever is returned, must be within 16mb.
+
+$limit and $project can reduce document size overheard.
+
+100MB RAM limit per stage ({allowDiskUse: true} can mitigate this.  but is not ideal.  LAST RESORT!)
+
+LARGEST STAGES MUST USE INDEXES!
+
+
 ###
+### AGGREGATION PIPELINE ON A SHARDED CLUSTER
+###
+
+standalone and replica sets ... all data is in the same place.
+
+sharded cluster, data is separated into shards
+
+
+
+
