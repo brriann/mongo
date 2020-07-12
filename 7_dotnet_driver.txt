@@ -323,5 +323,4 @@ TimeOutException
 ### PRINCIPLE OF LEAST PRIVILEGE
 ###
 
-
-
+should an application be able to create indexes? drop databases? etc.
