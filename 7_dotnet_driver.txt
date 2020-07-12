@@ -126,6 +126,86 @@ var movieLimited = await _moviesCollection
   
 
 ###
+### USING AGGREGATION BUILDERS
+###
+
+var matchStage = new BsonDocument("$match", new BsonDocument("directors", "Brian Foster"));
+
+var sortStage = new BsonDocument("$sort", new BsonDocument("imdb.ratings", -1))
+
+var projectionStage = new BsonDocument("$project", new BsonDocument("_id": 0, "MovieTitle", "$title"))
+
+var pipeline = PipelineDefinition<Movie, BsonDocument>
+  .Create(new BsonDocument[] {
+    matchStage,
+    sortStage,
+    projectionStage
+  }
+  
+  var result = await _moviesCollection.Aggregate(pipeline).ToListAsync()
+
+
+###
+### BASIC WRITES
+###
+
+.InsertOne() and InsertMany() (both with an Async version)
+
+var guitar = new Guitar {Name = "Les Paul", Price = 750}
+
+await _guitarCollection.InsertOneAsync(guitar)
+
+(guitar.Id will be populated upon completion)
+
+
+###
+### BASIC UPDATES
+###
+
+.UpdateOneAsync() >>UpdateResult
+.UpdateManyAsync() >>UpdateResult
+.FindOneAndUpdateAsync() >>returns updated document
+
+var updateResult = _theaterCollection.UpdateOne(filter,
+  new BsonDocument("$set",
+    new BsonDocument("location.address.street1", "123 Main St"))
+);
+
+var updatedDoc = _theaterCollection.FindOneAndUpdateAsync<Theater>(
+  filter,
+  Builders<Theater>.Update.Set(
+    t => t.Location.Address.Street1,
+    "123 Main St")
+  );
+
+UPDATING MANY
+
+var filter = Builders<Theater>
+  .Filter.Eq(t => t.Location.Address.Zipcode, "45066");
+  
+var update = Builders<Theater>
+  .Update.Set(t => t.Location.Address.City, "Springboro);
+  
+var result = await _theatersCollection.UpdateManyAsync(
+  filter, update);
+
+
+###
+###
+###
+
+
+###
+###
+###
+
+
+###
+###
+###
+
+
+###
 ###
 ###
 
