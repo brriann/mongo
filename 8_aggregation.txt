@@ -431,6 +431,22 @@ standalone and replica sets ... all data is in the same place.
 
 sharded cluster, data is separated into shards
 
+###
+### PIPELINE OPTIMIZATION
+###
+
+"covered query": no fetch stage - because it just uses info from INDEX
+
+AVOID NEEDLESS $PROJECTS!  THE AGGREGATION FRAMEWORK WILL PROJECT AWAY UNNECESSARY FIELDS FOR US
+-eg, $match then $group on a single field....don't need to only $project that field, the optimizer will do the work for us.
+
+USE THESE BEFORE AN $UNWIND, IF POSSIBLE:
+$map
+$reduce
+$filter
+-accumulator expressions available on $project stage
+
+$reduce can implement any high order array function.
 
 
 
