@@ -1,3 +1,50 @@
 
-
 https://docs.mongodb.com/drivers/csharp
+
+###
+### INTRO/SETUP
+###
+
+Nuget package: MongoDB.Driver
+
+var client = new MongoClient("uri_to_mongodb")
+var db = client.GetDatabase("db_name")
+var collection = db.GetCollection<BsonDocument>("collection_name")
+
+var result = collection.Find("{id: 1234}").FirstOrDefault()
+
+
+
+###
+###
+###
+
+
+
+###
+###
+###
+
+
+
+###
+###
+###
+
+
+
+###
+###
+###
+
+
+
+###
+###
+###
+
+
+
+###
+###
+###
