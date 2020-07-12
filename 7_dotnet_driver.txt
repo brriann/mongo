@@ -57,10 +57,28 @@ var filteredCollection = db.GetCollection<Guitar>("guitars").Find(g => g.Price >
 .UpdateOne(filter, update, options)
 .DeleteOne(g => g.Id == 1234)
 
+
 ###
-###
+### SYNC / ASYNC PROGRAMMING WITH MONGO DRIVER
 ###
 
+https://docs.microsoft.com/en-us/archive/msdn-magazine/2014/october/async-programming-introduction-to-async-await-on-asp-net
+https://docs.microsoft.com/en-us/aspnet/web-forms/overview/performance-and-caching/using-asynchronous-methods-in-aspnet-45
+
+ASP.NET applications have a THREAD POOL
+sync: if a thread is making a DB request, that thread is locked down until the external resource responds
+async: thread makes call to external resource (DB), and is immediately returned to the thread pool.
+  -when the request/response comes back from external resource, any thread from thread pool can handle it
+
+Method signatures:
+
+public ActionResult MyMethod(string Id) {...}
+vs
+public async Task<ActionResult> MyMethodAsync(string Id, CancellationToken cancelToken = default) {...}
+
+MongoDB Driver usage:
+
+return await collection.Find().FirstOrDefaultAsync()
 
 
 ###
