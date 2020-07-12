@@ -191,18 +191,44 @@ var result = await _theatersCollection.UpdateManyAsync(
 
 
 ###
+### WRITE CONCERNS AND WRITE DURABILITY (inserts, updates, etc)
 ###
+
+Write Concern: number of nodes needed to acknowledge a write, before the client gets an acknowledgement.
+
+In a replica set with primary and 2ndary notes, a writeConcern {w:1} will only get an acknowledgement that ONE node applied the write.
+  (this is the default writeConcern in MongoDB)
+
+{w:majority} 2 of 3 notes must make write
+  this will ensure that a write won't rollback in case of failover.
+  use for important writes, eg, new user
+  
+{w:0}, fire and forget. VERY FAST!
+  -less important writes that occur frequently?
+  
+
 ###
+### BASIC JOINS
+###
+
+$lookup operator in MQL
+(from/localField/foreignField/as) vs (from/let/pipeline/as) -- 2nd option uses a $match in pipeline to join on a certain field... can also have multiple stages in its pipeline...
+
+expressive $lookup?
 
 
 ###
-###
+### LOOKUPS USING THE C# DRIVER
 ###
 
+Compass-exported $lookup agg pipeline has BsonArray or BsonDocument[] structure with nested BsonDocuments for the aggregation pipeline stages
 
-###
-###
-###
+var pipeline = PipelineDefinition<Movie, BsonDocument>.Create(filter)
+
+var movies = _moviesCollection.Aggregate(pipeline).ToList()
+
+
+
 
 
 ###
