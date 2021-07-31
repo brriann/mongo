@@ -1,0 +1,1 @@
+https://kb.objectrocket.com/mongo-db/creating-stored-procedures-in-mongodb-with-stored-javascript-341
